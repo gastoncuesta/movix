@@ -26,9 +26,13 @@ This project was built as a **portfolio application**, showcasing modern mobile 
 |---------------------------|
 | ![](screenshots/home.png) |
 
-| Search                      | Saved                      | Profile                      |
-|-----------------------------|----------------------------|------------------------------|
-| ![](screenshots/search.png) | ![](screenshots/saved.png) | ![](screenshots/profile.png) |
+| Search                      | Saved                      | 
+|-----------------------------|----------------------------|
+| ![](screenshots/search.png) | ![](screenshots/saved.png) |
+
+| Profile                      | Login                      |
+|------------------------------|----------------------------|
+| ![](screenshots/profile.png) | ![](screenshots/login.png) |
 
 
 > Screenshots taken from iOS simulator (iPhone 17 Pro)
