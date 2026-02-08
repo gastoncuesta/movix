@@ -1,50 +1,106 @@
-# Welcome to your Expo app 👋
+# 📽️ Movix
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Movix es una **aplicación móvil de películas** desarrollada con **Expo y React Native**, que permite explorar, buscar y guardar películas favoritas. Incluye autenticación con Google, manejo de favoritos y soporte multi‑idioma.
 
-## Get started
+> 🚀 Proyecto cross‑platform (Android / iOS) enfocado en buenas prácticas de frontend móvil.
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## 📌 Features
 
-2. Start the app
+- 🎬 Listado de películas populares y trending  
+- 🔍 Búsqueda de películas  
+- ❤️ Guardar / remover películas favoritas (bookmarks)  
+- 🔐 Login con Google (Appwrite OAuth)  
+- 🌍 Selector de idioma (por defecto el del dispositivo)  
+- 🎨 UI con NativeWind (Tailwind en React Native)  
+- ⚡ Estado global con React Context y hooks
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## 🛠️ Tecnologías
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **Expo**
+- **React Native**
+- **TypeScript**
+- **Appwrite** (Auth + DB)
+- **NativeWind**
+- **Expo Router**
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 🚀 Instalación
 
-When you're ready, run:
+Clonar el repositorio:
 
 ```bash
-npm run reset-project
+git clone https://github.com/gastoncuesta/movix.git
+cd movix
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Instalar dependencias:
 
-## Learn more
+```bash
+npm install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Ejecutar en desarrollo:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npx expo start
+```
 
-## Join the community
+---
 
-Join our community of developers creating universal apps.
+## ⚙️ Variables de entorno
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Crear un archivo `.env` con las siguientes variables:
+
+```env
+APPWRITE_ENDPOINT=https://your-appwrite-endpoint
+APPWRITE_PROJECT_ID=your_project_id
+```
+
+(Si usás una API externa de películas, agregá la key correspondiente.)
+
+---
+
+## 📁 Estructura del proyecto
+
+```text
+movix/
+├── app/            # Screens y routing
+├── components/     # Componentes reutilizables
+├── services/       # Appwrite y APIs
+├── constants/      # Icons, images, config
+├── assets/         # Assets estáticos
+├── app.json
+└── README.md
+```
+
+---
+
+## 📱 Uso
+
+1. Abrí la app en Expo Go o emulador  
+2. Logueate con Google  
+3. Explorá y buscá películas  
+4. Guardá tus favoritas  
+5. Cambiá el idioma desde el selector
+
+---
+
+## 🤝 Contribuciones
+
+Las contribuciones son bienvenidas:
+
+1. Fork del repo  
+2. Crear una branch (`feature/nueva-feature`)  
+3. Commit de cambios  
+4. Pull Request
+
+---
+
+## 📜 Licencia
+
+MIT License © Gaston Cuesta
