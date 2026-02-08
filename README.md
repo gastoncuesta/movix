@@ -1,50 +1,66 @@
-# 📽️ Movix
+# 🎬 Movix
 
-Movix es una **aplicación móvil de películas** desarrollada con **Expo y React Native**, que permite explorar, buscar y guardar películas favoritas. Incluye autenticación con Google, manejo de favoritos y soporte multi‑idioma.
+**Movix** is a polished **mobile movie discovery app** built with **Expo & React Native**.  
+It focuses on clean UI, smooth UX, and real-world features like authentication, favorites, and localization.
 
-> 🚀 Proyecto cross‑platform (Android / iOS) enfocado en buenas prácticas de frontend móvil.
-
----
-
-## 📌 Features
-
-- 🎬 Listado de películas populares y trending  
-- 🔍 Búsqueda de películas  
-- ❤️ Guardar / remover películas favoritas (bookmarks)  
-- 🔐 Login con Google (Appwrite OAuth)  
-- 🌍 Selector de idioma (por defecto el del dispositivo)  
-- 🎨 UI con NativeWind (Tailwind en React Native)  
-- ⚡ Estado global con React Context y hooks
+This project was built as a **portfolio application**, showcasing modern mobile development patterns and production‑ready architecture.
 
 ---
 
-## 🛠️ Tecnologías
+## ✨ Highlights
+
+- 🎥 Browse **trending** and **latest** movies
+- 🔍 Real-time **search**
+- ❤️ Save & manage **bookmarked movies**
+- 🔐 **Google OAuth** authentication (Appwrite)
+- 🌍 **Multi-language support** (auto-detects device language)
+- 📱 Bottom tab navigation with smooth transitions
+- 🎨 Modern dark UI with NativeWind (Tailwind for RN)
+- ⚡ Global state via React Context & hooks
+
+---
+
+## 📸 Screenshots
+
+| Home | Search | Saved |
+|------|--------|-------|
+| ![](screenshots/home.png) | ![](screenshots/search.png) | ![](screenshots/saved.png) |
+
+| Profile |
+|---------|
+| ![](screenshots/profile.png) |
+
+> Screenshots taken from iOS simulator (iPhone 17 Pro)
+
+---
+
+## 🛠️ Tech Stack
 
 - **Expo**
 - **React Native**
 - **TypeScript**
-- **Appwrite** (Auth + DB)
-- **NativeWind**
 - **Expo Router**
+- **NativeWind**
+- **Appwrite** (Auth & Database)
 
 ---
 
-## 🚀 Instalación
+## 🚀 Getting Started
 
-Clonar el repositorio:
+Clone the repository:
 
 ```bash
 git clone https://github.com/gastoncuesta/movix.git
 cd movix
 ```
 
-Instalar dependencias:
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-Ejecutar en desarrollo:
+Run the app:
 
 ```bash
 npx expo start
@@ -52,55 +68,57 @@ npx expo start
 
 ---
 
-## ⚙️ Variables de entorno
+## ⚙️ Environment Variables
 
-Crear un archivo `.env` con las siguientes variables:
+Create a `.env` file in the project root:
 
 ```env
 APPWRITE_ENDPOINT=https://your-appwrite-endpoint
 APPWRITE_PROJECT_ID=your_project_id
 ```
 
-(Si usás una API externa de películas, agregá la key correspondiente.)
+(Optional) Add your movie API key if required.
 
 ---
 
-## 📁 Estructura del proyecto
+## 📁 Project Structure
 
 ```text
 movix/
-├── app/            # Screens y routing
-├── components/     # Componentes reutilizables
-├── services/       # Appwrite y APIs
+├── app/            # Screens & routing
+├── components/     # Reusable UI components
+├── services/       # Appwrite & API logic
 ├── constants/      # Icons, images, config
-├── assets/         # Assets estáticos
+├── assets/         # Static assets
+├── screenshots/    # App screenshots (for README)
 ├── app.json
 └── README.md
 ```
 
 ---
 
-## 📱 Uso
+## 📱 Usage
 
-1. Abrí la app en Expo Go o emulador  
-2. Logueate con Google  
-3. Explorá y buscá películas  
-4. Guardá tus favoritas  
-5. Cambiá el idioma desde el selector
-
----
-
-## 🤝 Contribuciones
-
-Las contribuciones son bienvenidas:
-
-1. Fork del repo  
-2. Crear una branch (`feature/nueva-feature`)  
-3. Commit de cambios  
-4. Pull Request
+1. Launch the app via Expo Go or emulator  
+2. Sign in with Google  
+3. Discover and search movies  
+4. Bookmark your favorites  
+5. Switch language from the profile screen  
 
 ---
 
-## 📜 Licencia
+## 🎯 Purpose
 
-MIT License © Gaston Cuesta
+This project was created to demonstrate:
+
+- Real authentication flows
+- Persistent user data
+- Clean UI/UX for consumer apps
+- Scalable folder structure
+- Cross-platform mobile development
+
+---
+
+## 📜 License
+
+MIT License © Gastón Cuesta
