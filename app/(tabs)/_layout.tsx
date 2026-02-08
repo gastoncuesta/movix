@@ -3,12 +3,13 @@ import React from 'react'
 import {Tabs} from "expo-router";
 import {images} from "@/constants/images";
 import {icons} from "@/constants/icons";
+import {useUser} from "@/services/AppWriteProvider";
 
 const TabIcon = ({focused, icon, title}: any) => {
     if (focused) {
         return <ImageBackground
             source={focused ? images.highlight : ""}
-            className="flex flex-row w-full flex-1 min-w-[112px]
+            className="flex flex-row w-full flex-1 min-w-[110px]
                                 min-h-16 mt-4 justify-center items-center rounded-full
                                 overflow-hidden"
         >
@@ -24,28 +25,29 @@ const TabIcon = ({focused, icon, title}: any) => {
 }
 
 const _Layout = () => {
+    const {current: user} = useUser();
     return (
         <Tabs
-        screenOptions={{
-            tabBarShowLabel:false,
-            tabBarItemStyle:{
-                width:'100%',
-                height:'100%',
-                justifyContent: 'center',
-                alignItems: 'center',
-            },
-            tabBarStyle: {
-                backgroundColor:'#0f0D23',
-                borderRadius: 50,
-                marginHorizontal: 20,
-                marginBottom: 36,
-                height: 52,
-                position: 'absolute',
-                overflow: 'hidden',
-                borderColor:'#0f0D23',
+            screenOptions={{
+                tabBarShowLabel: false,
+                tabBarItemStyle: {
+                    width: '100%',
+                    height: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                },
+                tabBarStyle: {
+                    backgroundColor: '#0f0D23',
+                    borderRadius: 50,
+                    marginHorizontal: 20,
+                    marginBottom: 36,
+                    height: 52,
+                    position: 'absolute',
+                    overflow: 'hidden',
+                    borderColor: '#0f0D23',
 
-            }
-        }}
+                }
+            }}
         >
             <Tabs.Screen
                 name="index"
@@ -71,6 +73,7 @@ const _Layout = () => {
                 name='saved'
                 options={{
                     title: 'Saved',
+                    href: !user ? null : "/saved",
                     headerShown: false,
                     tabBarIcon: ({focused}) => (
                         <TabIcon focused={focused} icon={icons.save} title="Saved"/>

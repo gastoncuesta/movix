@@ -1,10 +1,12 @@
 import {View, Text, ScrollView, Image, TouchableOpacity, FlatList} from 'react-native'
-import React from 'react'
-import {router, useLocalSearchParams} from "expo-router";
+import React, {useCallback, useEffect, useRef, useState} from 'react'
+import {router, useFocusEffect, useLocalSearchParams} from "expo-router";
 import useFetch from "@/services/useFetch";
 import {fetchMovieDetails} from "@/services/api";
 import {icons} from "@/constants/icons";
 import CastCard from "@/components/CastCard";
+import {getSavedMovie, getSavedMovies, updateSavedMovies} from "@/services/appWrite";
+import {useUser} from "@/services/AppWriteProvider";
 
 interface MovieInfoProps {
     label: string,
@@ -21,7 +23,21 @@ const MovieInfo = ({label, value}: MovieInfoProps) => (
 
 const MovieDetails = () => {
     const {id} = useLocalSearchParams();
-    const {data: movie, loading} = useFetch(() => fetchMovieDetails(id as string));
+    const {language} = useUser()
+    const {data: movie} = useFetch(() => fetchMovieDetails(id as string, language as string));
+
+    const {
+        data: isSaved,
+        refetch,
+    } = useFetch(() => {
+        if (!user?.$id) return Promise.resolve(false);
+        return getSavedMovie(user.$id, id.toString());
+    });
+
+    const [saved, setSaved] = useState(false);
+    const isTogglingRef = useRef(false);
+
+    const {current: user} = useUser()
 
     const casting = () => {
         let cast = movie?.credits.cast;
@@ -31,6 +47,44 @@ const MovieDetails = () => {
                 .filter(c => c.popularity > 1);
         }
     }
+
+    useEffect(() => {
+        if (typeof isSaved === "boolean" && !isTogglingRef.current) {
+            setSaved(isSaved);
+        }
+    }, [isSaved, saved]);
+
+
+    const toggleSaveMovie = async () => {
+        if (!user || !movie) return;
+
+        // Optimistic UI update
+        isTogglingRef.current = true;
+        setSaved((prev) => !prev);
+
+        try {
+            const { id, title, poster_path, release_date, vote_average, vote_count } = movie;
+
+            // `updateSavedMovies` should add/remove depending on current state and return the new saved state (boolean)
+            const updated = await updateSavedMovies(user.$id, {
+                movie_id: id.toString(),
+                title,
+                poster_url: poster_path ? poster_path : "",
+                release_date,
+                vote_average,
+                vote_count,
+            });
+
+            setSaved(updated);
+            await refetch();
+        } catch (e) {
+            // Revert optimistic update on error
+            setSaved((prev) => !prev);
+            console.error("Failed to toggle saved movie", e);
+        } finally {
+            isTogglingRef.current = false;
+        }
+    };
 
     return (
         <View
@@ -48,10 +102,19 @@ const MovieDetails = () => {
                 </View>
 
 
+                <View className="mt-5 px-5">
+                    <View className="flex flex-row justify-between">
+                        <Text className="text-white text-xl font-bold">{movie?.title}</Text>
+                        {user && <TouchableOpacity
+                            onPress={toggleSaveMovie}
+                        >
+                            {saved ? <Image source={icons.bookmark} className="size-8"/> :
+                                <Image className="size-8" source={icons.save}/>}
+                        </TouchableOpacity>}
 
-                <View className="flex-col items-start justify-center mt-5 px-5">
-                    <Text className="text-white text-xl font-bold">{movie?.title}</Text>
-
+                    </View>
+                </View>
+                <View className="flex-col items-start justify-center px-5">
                     <View className="flex-row items-center justify-center gap-x-1 mt-2">
                         <Text className="text-light-200 text-sm">{movie?.release_date.split("-")[0]}</Text>
                         <Text className="text-light-200 text-sm">{movie?.runtime}m</Text>
@@ -79,7 +142,7 @@ const MovieDetails = () => {
                                 ItemSeparatorComponent={() => <View className="w-3"/>}
                                 data={casting()}
                                 renderItem={({item}) => (
-                                   <CastCard {...item}/>
+                                    <CastCard {...item}/>
                                 )}
                                 keyExtractor={(item) => item.cast_id.toString()}
                             />
@@ -90,7 +153,8 @@ const MovieDetails = () => {
                     <MovieInfo label="Overview" value={movie?.overview}/>
                     <MovieInfo label="Genres" value={movie?.genres.map((g) => g.name).join(" - ") || 'N/A'}/>
                     <View className="flex flex-row justify-between w-1/2">
-                        {(movie?.budget ?? 0) > 0 && <MovieInfo label="Budget" value={`$${movie!.budget! / 1_000_000} million`}/>}
+                        {(movie?.budget ?? 0) > 0 &&
+                            <MovieInfo label="Budget" value={`$${movie!.budget! / 1_000_000} million`}/>}
                         {(movie?.budget ?? 0) > 0 &&
                             <MovieInfo label="Revenue" value={`$${Math.round(movie!.revenue!) / 1_000_000}`}/>}
                     </View>

@@ -1,24 +1,41 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import {Stack} from "expo-router";
+import './globals.css';
+import {StatusBar} from "react-native";
+import GlobalProvider from "@/services/global-provider";
+import {AppwriteProvider} from "@/services/AppWriteProvider";
+import * as WebBrowser from "expo-web-browser";
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
-
+WebBrowser.maybeCompleteAuthSession();
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+    return (
+        <AppwriteProvider>
+            <StatusBar hidden={true}/>
+            <Stack>
+                <Stack.Screen
+                    name="(tabs)"
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen
+                    name="movies/[id]"
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen
+                    name="cast/[id]"
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen
+                    name="settings/language"
+                    options={{
+                        headerShown: false
+                    }}
+                />
+            </Stack>
+        </AppwriteProvider>
+    );
 }

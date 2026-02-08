@@ -1,5 +1,5 @@
 import {ActivityIndicator, Animated, FlatList, Image, Text, View} from "react-native";
-import {Link, useRouter} from "expo-router";
+import {Link, useFocusEffect, useRouter} from "expo-router";
 import {images} from "@/constants/images";
 import {icons} from "@/constants/icons";
 import ScrollView = Animated.ScrollView;
@@ -7,26 +7,38 @@ import SearchBar from "@/components/SearchBar";
 import useFetch from "@/services/useFetch";
 import {fetchMovies} from "@/services/api";
 import MovieCard from "@/components/MovieCard";
-import {use} from "react";
+import {use, useCallback} from "react";
 import {getTrendingMovies} from "@/services/appWrite";
 import TrendingCard from "@/components/TrendingCard";
+import {useUser} from "@/services/AppWriteProvider";
 
 export default function Index() {
-    const router = useRouter();
+    const router = useRouter()
+    const {language} = useUser()
 
     const {
         data: trendingMovies,
         loading: trendingLoading,
-        error: trendingError
+        error: trendingError,
+        refetch: refetchTrendings
     } = useFetch(getTrendingMovies)
 
     const {
         data: movies,
         loading: moviesLoading,
-        error: moviesError
+        error: moviesError,
+        refetch: moviesRefetch
     } = useFetch(() => fetchMovies({
-        query: ''
+        query: '',
+        language: language || 'en-US'
     }))
+
+    useFocusEffect(
+        useCallback(() => {
+            refetchTrendings();
+            moviesRefetch()
+        }, [language])
+    );
 
     return (
         <View className="flex-1 bg-primary">
@@ -36,7 +48,7 @@ export default function Index() {
                         contentContainerStyle={{
                             minHeight: '100%', paddingBottom: 10
                         }}>
-                <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto"/>
+                <Image source={icons.logo} className="w-14 h-12 mt-20 mb-5 mx-auto"/>
                 {moviesLoading || trendingLoading ? (
                     <ActivityIndicator
                         size="large"
@@ -53,7 +65,7 @@ export default function Index() {
                             placeholder="Search for a movie"
                         />
 
-                        {trendingMovies && (
+                        {trendingMovies && trendingMovies.length > 0 && (
                             <View className="mt-10">
                                 <Text className="text-lg text-white font-bold mb-3">Trending Movies</Text>
                                 <FlatList

@@ -14,7 +14,8 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import {images} from "@/constants/images";
 import {settings} from "@/constants/data";
 import {useUser} from "@/services/AppWriteProvider";
-import {Link} from "expo-router";
+import {Href, Link} from "expo-router";
+import LanguageSelector from "@/components/LanguageSelector";
 
 interface SettingItemsProps {
     icon: ImageSourcePropType;
@@ -24,23 +25,20 @@ interface SettingItemsProps {
     showArrow?: boolean;
 }
 
-const SettingItem = ({icon, title, onPress, textStyle, showArrow = true}: SettingItemsProps) => {
-    return <Link href={`/profile/${title}`.toLowerCase().trim()} asChild>
-        <TouchableOpacity onPress={onPress} className="flex flex-row items-center justify-between py-3">
-            <View className="flex flex-row items-center gap-3">
-                <Image source={icon} className="size-6"/>
-                <Text className={`text-lg text-white ${textStyle} `}>{title}</Text>
-            </View>
-            {showArrow && <Image source={icons.arrow} className="size-5"/>}
-        </TouchableOpacity>
-    </Link>
-}
+const SettingItem = ({icon, title, onPress, textStyle, showArrow = true}: SettingItemsProps) => (
+    <TouchableOpacity onPress={onPress} className="flex flex-row items-center justify-between py-3">
+        <View className="flex flex-row items-center gap-3">
+            <Image source={icon} className="size-6"/>
+            <Text className={`text-lg text-white ${textStyle} `}>{title}</Text>
+        </View>
+        {showArrow && <Image source={icons.arrow} className="size-5"/>}
+    </TouchableOpacity>
+
+)
 
 
-const Profile2 = () => {
+const Profile = () => {
     const {current: user, logout, login} = useUser();
-    // const {user, refetch, isLoggedIn } = useGlobalContext();
-
 
     const handleLogout = async () => {
         const result = await logout();
@@ -125,6 +123,7 @@ const Profile2 = () => {
                             {settings.map((item, index) => (
                                 <SettingItem key={index} {...item} />
                             ))}
+                            <LanguageSelector/>
                         </View>
 
                         <View className="flex flex-col mt-5 border-t pt-5">
@@ -139,4 +138,4 @@ const Profile2 = () => {
         </SafeAreaView>
     )
 }
-export default Profile2
+export default Profile

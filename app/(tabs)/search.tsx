@@ -7,9 +7,12 @@ import {icons} from "@/constants/icons";
 import SearchBar from "@/components/SearchBar";
 import {useEffect, useState} from "react";
 import {updateSearchCount} from "@/services/appWrite";
+import {useUser} from "@/services/AppWriteProvider";
+import {languages} from "@/constants/data";
 
 const Search = () => {
     const [query, setQuery] = useState("");
+    const {language} = useUser();
     const {
         data: movies,
         loading: moviesLoading,
@@ -17,7 +20,8 @@ const Search = () => {
         refetch: loadMovies,
         resetData: resetMovies,
     } = useFetch(() => fetchMovies({
-        query
+        query,
+        language: language|| "en-US"
     }), false)
 
     useEffect(() => {
@@ -35,7 +39,7 @@ const Search = () => {
     }, [query]);
 
     useEffect(() => {
-        if (movies?.length > 0 && movies?.[0]) {
+        if (movies && movies.length > 0 && movies?.[0]) {
             updateSearchCount(query, movies[0])
         }
     }, [movies]);
@@ -61,14 +65,13 @@ const Search = () => {
                 ListHeaderComponent={
                     <>
                         <View className="w-full flex-row justify-center mt-20 mb-5 items-center">
-                            <Image source={icons.logo} className="w-12 h-10"/>
+                            <Image source={icons.logo} className="w-14 h-12"/>
                         </View>
                         <View className="my-5 ">
                             <SearchBar
                                 placeholder="Search movies..."
                                 value={query}
                                 onChangeText={(text: string) => setQuery(text)}
-
                             />
                         </View>
                         {moviesLoading && (
@@ -79,7 +82,7 @@ const Search = () => {
                                 Error: {moviesError.message}
                             </Text>
                         )}
-                        {!moviesLoading && !moviesError && query.trim() && movies?.length > 0 && (
+                        {!moviesLoading && !moviesError && query.trim() && movies && movies?.length > 0 && (
                             <Text className="text-xl text-white font-bold">
                                 Search results for {''}
                                 <Text className="text-accent">{query}</Text>

@@ -1,161 +1,73 @@
 import React, {useMemo, useState} from "react";
-import {Modal, Pressable, Text, View} from "react-native";
+import {Image, Modal, Pressable, Text, TouchableOpacity, View} from "react-native";
 import {Picker} from "@react-native-picker/picker";
 import * as Localization from "expo-localization";
+import {icons} from "@/constants/icons";
+import {useUser} from "@/services/AppWriteProvider";
+import {languages} from "@/constants/data";
 
-type Lang = { code: string; label: string };
-
-const LANGUAGES: Lang[] = [
-    {code: "en", label: "English"},
-    {code: "es", label: "Español"},
-    {code: "da", label: "Dansk"},
-    {code: "fr", label: "Français"},
-    {code: "de", label: "Deutsch"},
-    {code: "it", label: "Italiano"},
-    {code: "pt", label: "Português"},
-    // agregá los que uses
-];
-
+const DEFAULT_LANGUAGE = "en-US"
 function getDeviceLang(): string {
-    // ej: "es-AR" -> "es"
-    const device = Localization.getLocales()?.[0]?.languageCode ?? "en";
-    return device;
+    return Localization.getLocales()?.[0]?.languageTag ?? DEFAULT_LANGUAGE;
 }
 
 export default function LanguageSelector() {
     const deviceLang = useMemo(getDeviceLang, []);
-    const initial = LANGUAGES.some(l => l.code === deviceLang) ? deviceLang : "en";
+    const {setLanguage} = useUser();
+
+    const initial = languages.some(l => l.code === deviceLang) ? deviceLang : DEFAULT_LANGUAGE;
 
     const [open, setOpen] = useState(false);
     const [lang, setLang] = useState<string>(initial);
 
-    const currentLabel = LANGUAGES.find(l => l.code === lang)?.label ?? lang;
+    const currentLabel = languages.find(l => l.code === lang)?.name ?? lang;
 
     return (
         <View>
-            <Pressable
-                onPress = {()
-=>
-    setOpen(true)
-}
-    style = {
-    {
-        padding: 12, borderRadius
-    :
-        10, backgroundColor
-    :
-        "#222"
-    }
-}
->
-    <Text style = {
-    {
-        color: "white"
-    }
-}>
-    Language: {
-        currentLabel
-    }
-    </Text>
-    < /Pressable>
+            <TouchableOpacity
+                className="flex flex-row items-center justify-between py-3"
+                onPress={() => setOpen(true)}
+            >
+                <View className="flex flex-row items-center gap-3">
+                    <Image source={icons.language} className="size-6"/>
+                    <Text className="text-white text-lg">Language: {currentLabel}</Text>
+                </View>
+                <Image source={icons.arrow} className="size-5"/>
+            </TouchableOpacity>
 
-    < Modal
-    visible = {open}
-    transparent
-    animationType = "fade" >
-    <Pressable
-        onPress = {()
-=>
-    setOpen(false)
-}
-    style = {
-    {
-        flex: 1, backgroundColor
-    :
-        "rgba(0,0,0,0.5)", justifyContent
-    :
-        "flex-end"
-    }
-}
->
-    <Pressable
-        onPress = {()
-=>
-    {
-    }
-}
-    style = {
-    {
-        backgroundColor: "white", padding
-    :
-        16, borderTopLeftRadius
-    :
-        16, borderTopRightRadius
-    :
-        16
-    }
-}
->
-    <Text style = {
-    {
-        fontSize: 16, fontWeight
-    :
-        "600", marginBottom
-    :
-        8
-    }
-}>
-    Select
-    language
-    < /Text>
+            <Modal visible={open} transparent animationType="fade">
+                <TouchableOpacity
+                    onPress={() => setOpen(false)}
+                    className="flex-1 bg-black/50 justify-end">
+                    <Pressable
+                        onPress={() => {
+                        }}
+                        className="bg-white rounded-t-2xl p-4"
+                    >
+                        <Text className="text-lg font-semibold mb-2">
+                            Select language
+                        </Text>
 
-    < Picker
-    selectedValue = {lang}
-    onValueChange = {(value)
-=>
-    setLang(value)
-}
->
-    {
-        LANGUAGES.map((l) => (
-            <Picker.Item key = {l.code}
-        label = {l.label}
-        value = {l.code}
-        />
-    ))
-    }
-    </Picker>
+                        <Picker
+                            selectedValue={lang}
+                            onValueChange={(value) => {
+                                setLang(value)
+                                setLanguage(value)
+                            }}
+                        >
+                            {languages.map((l) => (
+                                <Picker.Item key={l.code} label={l.name} value={l.code}/>
+                            ))}
+                        </Picker>
 
-    < Pressable
-    onPress = {()
-=>
-    setOpen(false)
-}
-    style = {
-    {
-        marginTop: 12, padding
-    :
-        12, borderRadius
-    :
-        10, backgroundColor
-    :
-        "#222"
-    }
-}
->
-    <Text style = {
-    {
-        color: "white", textAlign
-    :
-        "center"
-    }
-}>
-    Done < /Text>
-    < /Pressable>
-    < /Pressable>
-    < /Pressable>
-    < /Modal>
-    < /View>
-)
-    ;
+                        <Pressable
+                            onPress={() => setOpen(false)}
+                            className="mt-4 bg-primary py-3 rounded-xl">
+                            <Text className="text-white text-center font-semibold">Done</Text>
+                        </Pressable>
+                    </Pressable>
+                </TouchableOpacity>
+            </Modal>
+        </View>
+    );
 }
