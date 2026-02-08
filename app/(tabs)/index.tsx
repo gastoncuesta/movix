@@ -1,16 +1,16 @@
 import {ActivityIndicator, Animated, FlatList, Image, Text, View} from "react-native";
-import {Link, useFocusEffect, useRouter} from "expo-router";
+import {useFocusEffect, useRouter} from "expo-router";
 import {images} from "@/constants/images";
 import {icons} from "@/constants/icons";
-import ScrollView = Animated.ScrollView;
 import SearchBar from "@/components/SearchBar";
 import useFetch from "@/services/useFetch";
 import {fetchMovies} from "@/services/api";
 import MovieCard from "@/components/MovieCard";
-import {use, useCallback} from "react";
+import {useCallback} from "react";
 import {getTrendingMovies} from "@/services/appWrite";
 import TrendingCard from "@/components/TrendingCard";
 import {useUser} from "@/services/AppWriteProvider";
+import ScrollView = Animated.ScrollView;
 
 export default function Index() {
     const router = useRouter()

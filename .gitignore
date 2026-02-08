@@ -8,8 +8,8 @@ node_modules/
 dist/
 web-build/
 expo-env.d.ts
-.idea
-.env
+.idea/
+package-lock.json
 
 # Native
 .kotlin/
@@ -33,6 +33,7 @@ yarn-error.*
 *.pem
 
 # local env files
+.env
 .env*.local
 
 # typescript

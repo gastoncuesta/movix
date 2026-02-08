@@ -1,11 +1,11 @@
-import {View, Text, ScrollView, Image, TouchableOpacity, FlatList} from 'react-native'
-import React, {useCallback, useEffect, useRef, useState} from 'react'
-import {router, useFocusEffect, useLocalSearchParams} from "expo-router";
+import {FlatList, Image, ScrollView, Text, TouchableOpacity, View} from 'react-native'
+import React, {useEffect, useRef, useState} from 'react'
+import {router, useLocalSearchParams} from "expo-router";
 import useFetch from "@/services/useFetch";
 import {fetchMovieDetails} from "@/services/api";
 import {icons} from "@/constants/icons";
 import CastCard from "@/components/CastCard";
-import {getSavedMovie, getSavedMovies, updateSavedMovies} from "@/services/appWrite";
+import {getSavedMovie, updateSavedMovies} from "@/services/appWrite";
 import {useUser} from "@/services/AppWriteProvider";
 
 interface MovieInfoProps {

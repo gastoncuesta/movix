@@ -1,12 +1,9 @@
-import {View, Text, Image, ActivityIndicator, FlatList} from 'react-native'
-import React, {useCallback, useEffect, useState} from 'react'
-import {icons} from "@/constants/icons";
+import {FlatList, Image, View} from 'react-native'
+import React, {useCallback} from 'react'
 import {images} from "@/constants/images";
 import MovieCard from "@/components/MovieCard";
-import SearchBar from "@/components/SearchBar";
 import useFetch from "@/services/useFetch";
-import {fetchMovies} from "@/services/api";
-import {getSavedMovies, updateSearchCount} from "@/services/appWrite";
+import {getSavedMovies} from "@/services/appWrite";
 import {useUser} from "@/services/AppWriteProvider";
 import {useFocusEffect} from "expo-router";
 

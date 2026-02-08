@@ -1,10 +1,9 @@
-import {View, Text, Image, ScrollView, FlatList, TouchableOpacity} from 'react-native'
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native'
 import React from 'react'
 import {icons} from "@/constants/icons";
 import {router, useLocalSearchParams} from "expo-router";
 import useFetch from "@/services/useFetch";
-import {fetchMovieDetails, fetchPeopleDetails} from "@/services/api";
-import CastCard from "@/components/CastCard";
+import {fetchPeopleDetails} from "@/services/api";
 
 interface CastInfoProps {
     label: string,

@@ -1,7 +1,6 @@
 import {Stack} from "expo-router";
 import './globals.css';
 import {StatusBar} from "react-native";
-import GlobalProvider from "@/services/global-provider";
 import {AppwriteProvider} from "@/services/AppWriteProvider";
 import * as WebBrowser from "expo-web-browser";
 

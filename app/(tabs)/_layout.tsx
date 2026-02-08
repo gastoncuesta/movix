@@ -1,4 +1,4 @@
-import {View, Text, ImageBackground, Image} from 'react-native'
+import {Image, ImageBackground, Text, View} from 'react-native'
 import React from 'react'
 import {Tabs} from "expo-router";
 import {images} from "@/constants/images";

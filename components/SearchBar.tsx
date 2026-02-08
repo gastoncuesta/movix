@@ -1,7 +1,6 @@
-import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native'
+import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import React from 'react'
 import {icons} from "@/constants/icons";
-import search from "@/app/(tabs)/search";
 
 interface Props {
     placeholder: string;

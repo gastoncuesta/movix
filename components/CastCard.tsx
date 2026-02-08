@@ -1,8 +1,6 @@
-import {View, Text, TouchableOpacity, Image} from 'react-native'
+import {Image, Text, TouchableOpacity} from 'react-native'
 import React from 'react'
 import {Link} from "expo-router";
-import MaskedView from "@react-native-masked-view/masked-view";
-import {images} from "@/constants/images";
 
 const CastCard = ({name, character, profile_path, id }: Cast) => {
 

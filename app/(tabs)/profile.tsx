@@ -14,7 +14,6 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import {images} from "@/constants/images";
 import {settings} from "@/constants/data";
 import {useUser} from "@/services/AppWriteProvider";
-import {Href, Link} from "expo-router";
 import LanguageSelector from "@/components/LanguageSelector";
 
 interface SettingItemsProps {
